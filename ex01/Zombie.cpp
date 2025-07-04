@@ -6,11 +6,6 @@ Zombie::Zombie()
 	name = "Unnamed";
 }
 
-Zombie::Zombie(std::string nm)
-{
-	name = nm;
-}
-
 Zombie::~Zombie()
 {
 	std::cout << RED << name << " destroyed" << RESET << std::endl;
