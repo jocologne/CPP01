@@ -1,6 +1,7 @@
+# Makefile
 NAME = zombieHorde
 
-SRC = Zombie.cpp zombieHorde.cpp main.cpp
+SRC = main.cpp Zombie.cpp zombieHorde.cpp
 OBJDIR = obj
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
 CXX = c++
@@ -8,19 +9,20 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@$(CXX) $(CXXFLAGS) $^ -o $@
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
 
-$(OBJDIR)/%.o: %.cpp
-	@mkdir -p $(OBJDIR)
-	@$(CXX) $(CXXFLAGS) -c $< -o $@
+$(OBJDIR)/%.o: %.cpp | $(OBJDIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(NAME): $(OBJ)
+	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 
 clean:
-	@rm -f $(OBJ)
-	@rmdir $(OBJDIR) 2>/dev/null || true
+	rm -rf $(OBJDIR)
 
 fclean: clean
-	@rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
